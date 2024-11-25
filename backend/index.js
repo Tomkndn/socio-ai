@@ -21,6 +21,6 @@ app.use('/api', routes);
 
 connect().then(() => {
     app.listen(PORT, () => {
-        console.log(`Server is running on http://localhost:${API_PORT}`);
+        console.log(`Server is running on http://localhost:${PORT}`);
     });
 });
