@@ -26,11 +26,11 @@ export const getProductById = async (req, res) => {
 
 export const createProduct = async (req, res) => {
     if(!req?.user?._id) {
-        return res.status(403).json({ message: 'You are not authorized to create this product' });
+        return res.status(401).json({ message: 'You are not authorized to create this product' });
     }
 
     let { Title, Brand, Description, Price, Currency, Keywords, Category, url, id } = req.body;
-    
+
     const getPost = await Post.findOne({
         $or: [
             {url}, {_id: id}

@@ -64,15 +64,9 @@ export async function geminiAnalysis(pathOfListing, content) {
 
     if (Array.isArray(finalJson)) {
         console.log('Final Json:', finalJson[0]);
-
         return finalJson[0];
     }
 
-    console.log('Final JSON:', finalJson);
-
-
-
-    // saveResponseToFile(destinationListing,finalJson)
     return finalJson;
 }
 

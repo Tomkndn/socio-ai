@@ -1,25 +1,20 @@
+DOCKER:-
+    - Install Docker and Docker Compose
+    - Run the following command to build the images and run the containers
+        - `docker-compose up --build`
+    - FRONTEND:- http://localhost:3000
+    - BACKEND:- http://localhost:4000
+    - FLASK:- http://localhost:5000
+    - Run the following command to stop the containers
+        - `docker-compose down`
+
 FRONTEND:-
-
-    Requirements:-
-        - Node.js (npm)
-
     Environment Variables:-
         - Copy the .env.example file and Rename it as .env
         - Handle the Backend API URL named as
             - NEXT_PUBLIC_API_URL = http://localhost:4000
 
-    Steps to run:-
-        - Run the following commands:
-            - npm install
-            - npm start
-        - Open the browser and go to http://localhost:3000
-
 BACKEND:-
-
-    Requirements:-
-        - Node.js (npm)
-        - MongoDB
-
     Environment Variables:-
         - Copy the .env.example file and Rename it as .env
         - Go to https://www.mongodb.com/
@@ -32,19 +27,7 @@ BACKEND:-
             - Create a new account and get the cloud name, api key and api secret
             - Add the cloud name, api key and api secret in the .env file
 
-    Steps to run:-
-        - Run the following commands:
-            - npm install
-            - npm start
-        - Open the postman and go to http://localhost:4000
-
 FLASK:-
-
-    Requirements:-
-        - Python 3.6 or higher
-
-    Steps to run:-
-        - Run the following commands:
-            - pip install -r requirements.txt
-            - python app.py
-        - Open the postman and go to http://localhost:5000
+    Environment Varibles:-
+        - Copy the .env.example file and Rename it as .env
+        - Define PORT and HOST in the .env file
