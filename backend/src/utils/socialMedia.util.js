@@ -64,10 +64,11 @@ export const getTweet = async (url, assetCwd) => {
     } catch (error) {
         console.error('Error fetching tweet data:', error);
         return null;
-    } finally {
-        if(fs.existsSync(assetCwd))
-            fs.rmSync(assetCwd, { recursive: true });
     }
+    // finally {
+        // if(fs.existsSync(assetCwd))
+        //     fs.rmSync(assetCwd, { recursive: true });
+    // }
 };
 
 export const getInsta = async (url, assetCwd) => {
@@ -106,8 +107,9 @@ export const getInsta = async (url, assetCwd) => {
     } catch (error) {
         console.error('Error fetching Insta data:', error);
         return null;
-    } finally {
-        if(fs.existsSync(assetCwd))
-            fs.rmSync(assetCwd, { recursive: true });
     }
+    // finally {
+        // if(fs.existsSync(assetCwd))
+        //     fs.rmSync(assetCwd, { recursive: true });
+    // }
 };
