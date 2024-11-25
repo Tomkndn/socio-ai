@@ -8,8 +8,13 @@ import { uploadToCloudinary } from '../services/cloudinary.service.js';
 
 export const getTweet = async (url, assetCwd) => {
     try {
+        // console.log("url", url);
+        // console.log("assetCwd", assetCwd);
+
         const data = await fetchTweetDataWithMedia(url);
         if (!data) return null;
+
+        console.log('Data:', data);
 
         data.images = data.images?.length ? await Promise.all(
             data.images.map(async (image) => {
@@ -59,15 +64,19 @@ export const getTweet = async (url, assetCwd) => {
     } catch (error) {
         console.error('Error fetching tweet data:', error);
         return null;
-    } finally {
-        if(fs.existsSync(assetCwd))
-            fs.rmSync(assetCwd, { recursive: true });
     }
+    // finally {
+        // if(fs.existsSync(assetCwd))
+        //     fs.rmSync(assetCwd, { recursive: true });
+    // }
 };
 
 export const getInsta = async (url, assetCwd) => {
     try {
+        console.log("assetCwd", assetCwd);
+
         let data = await fetchInstagramDataWithMedia(url);
+        // console.log('Data:', data);
         if (!data) return null;
 
         data = await categorizeFiles(assetCwd);
@@ -98,8 +107,9 @@ export const getInsta = async (url, assetCwd) => {
     } catch (error) {
         console.error('Error fetching Insta data:', error);
         return null;
-    } finally {
-        if(fs.existsSync(assetCwd))
-            fs.rmSync(assetCwd, { recursive: true });
     }
+    // finally {
+        // if(fs.existsSync(assetCwd))
+        //     fs.rmSync(assetCwd, { recursive: true });
+    // }
 };

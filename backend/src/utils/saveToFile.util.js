@@ -12,33 +12,36 @@ export async function saveToFile(filename, data) {
 }
 
 export async function categorizeFiles(folderPath) {
-    const categorizedFiles = {
-        content: [], // Correctly handling text files
-        images: [],
-        videos: [],
-    };
+    try {
+        const categorizedFiles = {
+            content: [],
+            images: [],
+            videos: [],
+        };
 
+        console.log("inside before" + folderPath);
+        const items = fs.readdirSync(path.resolve(folderPath));
+        console.log("after" + items);
+        items.forEach((item) => {
+            const itemPath = path.join(folderPath, item);
+            const stat = fs.statSync(itemPath);
 
-    console.log("inside before" + folderPath);
-    const items = fs.readdirSync(path.resolve(folderPath));
-    console.log("after" + items);
-    items.forEach((item) => {
-        const itemPath = path.join(folderPath, item);
-        const stat = fs.statSync(itemPath);
+            if (stat.isFile()) {
+                const ext = path.extname(item).toLowerCase();
 
-        // Check if it's a file and categorize based on extension
-        if (stat.isFile()) {
-            const ext = path.extname(item).toLowerCase();
-
-            if (ext === '.txt') {
-                categorizedFiles.content.push(item);
-            } else if (ext === '.jpg') {
-                categorizedFiles.images.push(item);
-            } else if (ext === '.mp4') {
-                categorizedFiles.videos.push(item);
+                if (ext === '.txt') {
+                    categorizedFiles.content.push(item);
+                } else if (ext === '.jpg') {
+                    categorizedFiles.images.push(item);
+                } else if (ext === '.mp4') {
+                    categorizedFiles.videos.push(item);
+                }
             }
-        }
-    });
+        });
 
-    return categorizedFiles;
+        return categorizedFiles;
+    } catch (error) {
+        console.error('Error categorizing files:', error);
+        return null;
+    }
 }

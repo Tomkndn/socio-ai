@@ -28,8 +28,9 @@ export const createProduct = async (req, res) => {
     if(!req?.user?._id) {
         return res.status(403).json({ message: 'You are not authorized to create this product' });
     }
-    const { Title, Brand, Description, Price, Currency, Keywords, Category, url, id} = req.body;
 
+    let { Title, Brand, Description, Price, Currency, Keywords, Category, url, id } = req.body;
+    
     const getPost = await Post.findOne({
         $or: [
             {url}, {_id: id}
@@ -43,6 +44,11 @@ export const createProduct = async (req, res) => {
         });
     }
 
+
+
+    Keywords = Keywords?.toString() || '';
+    Category = Category?.toString() || '';
+
     const product = new Product({
         title: Title,
         description: Description,
@@ -52,7 +58,7 @@ export const createProduct = async (req, res) => {
         videos: getPost.videos,
         url: url,
         brand: Brand,
-        keywords: Keywords.split(',').map((key) => key.trim()),
+        keywords: Keywords?.split(',')?.map((key) => key?.trim()) || undefined,
         category: Category.split('>').map((category) => category.trim()),
         owner: req.user._id,
     });

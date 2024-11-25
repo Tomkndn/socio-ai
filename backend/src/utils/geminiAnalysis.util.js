@@ -43,7 +43,7 @@ export async function geminiAnalysis(pathOfListing, content) {
             },
             {
                 text: `
-                    Analyze all the text of uploaded text file, the keyword "another listing" seperates out all the listing in the file. You need to analyze all the lisitngs as it is of a single a product,On your analysis return me the result in a format that amazon seller account accepts as product listing with all the required details. For more precision you may also surf the web accordingly for the analysis and listing according to the context ${content}. and ensure if any details is missing fill with some arbitary details in indian format and the response should be in json format and dont pass any comments.
+                    Analyze all the text of uploaded text file, the keyword "another listing" seperates out all the listing in the file. You need to analyze all the lisitngs as it is of a single product,On your analysis return me the result in a format that amazon seller account accepts as product listing with all the required details. For more precision you may also surf the web accordingly for the analysis and listing according to the context ${content}. and ensure if any details is missing fill with some arbitary details in indian format and the response must be single product as JSON Object and dont pass any comments.
 
                     The analysis should be in compliance with the following parameters and the name should be exact:
                     Title:
@@ -60,7 +60,17 @@ export async function geminiAnalysis(pathOfListing, content) {
     );
 
     const data = result.response.text();
-    const finalJson = convertListingToJSON(data);
+    const finalJson = await convertListingToJSON(data);
+
+    if (Array.isArray(finalJson)) {
+        console.log('Final Json:', finalJson[0]);
+
+        return finalJson[0];
+    }
+
+    console.log('Final JSON:', finalJson);
+
+
 
     // saveResponseToFile(destinationListing,finalJson)
     return finalJson;
@@ -76,7 +86,7 @@ function saveResponseToFile(filePath, data) {
     });
 }
 
-function convertListingToJSON(listingText) {
+async function convertListingToJSON(listingText) {
     const lines = listingText.split('\n');
 
     const startIndex = lines.findIndex((line) =>
@@ -100,5 +110,5 @@ function convertListingToJSON(listingText) {
         return updatedText;
     }
 
-    return '';
+    return {};
 }

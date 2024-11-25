@@ -42,9 +42,9 @@ export const generateWithGemini = async (mediaPath, content) => {
     // removing unwanted files/folders
     fs.unlink('file_generation_log.txt');
     fs.unlink('processed_files_summary.txt');
-    fs.rm('../final', { recursive: true, force: true });
-    fs.rm('../temp', { recursive: true, force: true });
-    fs.rm('../media', { recursive: true, force: true });
+    // fs.rm('../final', { recursive: true, force: true });
+    // fs.rm('../temp', { recursive: true, force: true });
+    // fs.rm('../media', { recursive: true, force: true });
 
     return data;
 };

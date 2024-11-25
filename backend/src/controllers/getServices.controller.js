@@ -22,9 +22,9 @@ export const getPost = async (req, res, next) => {
 
         let data;
         if (url.hostname.includes('instagram.com')) {
-            data = await getInsta(url, assetCwd);
+            data = await getInsta(url.href, assetCwd);
         } else if (url.hostname.includes('x.com') || url.hostname.includes('twitter.com')) {
-            data = await getTweet(url, assetCwd);
+            data = await getTweet(url.href, assetCwd);
         } else {
             return res.status(400).json({
                 source: 'unknown',
@@ -49,19 +49,6 @@ export const getPost = async (req, res, next) => {
 };
 
 export const getAnalysis = async (req, res, next) => {
-    if (fs.existsSync("../final")) {
-        fs.rmSync("../final", { recursive: true,force: true });
-    }
-    if (fs.existsSync("../media")) {
-        fs.rmSync("../media", { recursive: true, force: true });
-    }
-    if (fs.existsSync("../temp")) {
-        fs.rmSync("../temp", { recursive: true, force: true });
-    }
-    if (!fs.existsSync("../final") && !fs.existsSync("../media") && !fs.existsSync("../temp")) {
-        console.log("All Directories Cleared");
-    }
-
     try {
         const { url, id } = req.query;
         if(!url && !id) {
