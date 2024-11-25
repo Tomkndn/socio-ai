@@ -26,6 +26,7 @@ import {
 } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import ProductCard from '@/components/Home/GenerateProduct/ProductCard';
+import NProgress from "nprogress";
 
 const samplePost: ExtractedPost = {
     _id: '1',
@@ -33,9 +34,9 @@ const samplePost: ExtractedPost = {
     owner: 'sample_user',
     url: 'https://www.instagram.com/p/111111111/',
     images: [
-        'https://via.placeholder.com/300',
-        'https://via.placeholder.com/300',
-        'https://via.placeholder.com/300',
+        {url:'https://via.placeholder.com/300',publicId:'1'},
+        {url:'https://via.placeholder.com/300',publicId:'1'},
+        {url:'https://via.placeholder.com/300',publicId:'1'},
     ],
 };
 
@@ -43,6 +44,7 @@ const HomePage = () => {
     const [link, setLink] = useState('');
     const { user, setUser } = useAuth();
     const [isLoading, setIsLoading] = useState(false);
+    const [isListingLoading, setIsListingLoading] = useState(false);
     const [activeTab, setActiveTab] = useState('post');
     const [isGeneratingProduct, setIsGeneratingProduct] =
         useState(false);
@@ -54,10 +56,11 @@ const HomePage = () => {
     const [error, setError] = useState('');
 
     const addPost = async (url: string) => {
-        setIsLoading(true);
-        setError('');
-
         try {
+            setIsLoading(true);
+            setIsListingLoading(true);
+            NProgress.start();
+            setError('');
             const response = await axios.post(
                 `${process.env.NEXT_PUBLIC_API_URL}/posts/url`,
                 { url },
@@ -80,11 +83,13 @@ const HomePage = () => {
             setError('Failed to load content. Please try again.');
         } finally {
             setIsLoading(false);
+            NProgress.done(); 
         }
     };
 
     const addProduct = async (url: string) => {
         try {
+            NProgress.start();
             const response = await axios.post(
                 `${process.env.NEXT_PUBLIC_API_URL}/products/analyze?url=${url}`,
                 {
@@ -95,7 +100,7 @@ const HomePage = () => {
                 }
             );
 
-            if (response?.data) {
+            if (response.data) {
                 setProduct(
                     response.data as unknown as AmazonProductListing
                 );
@@ -104,11 +109,14 @@ const HomePage = () => {
             } else if (response.status === 403) {
                 redirect('/auth');
             } else {
-                console.error(response);
+                console.log(response);
             }
-        } catch (err: AxiosError | any) {
-            console.error(err);
-            setError('Failed to load product. Please try again.');
+        } catch (err) {
+            console.log(err);
+            // setError('Failed to load product. Please try again.');
+        } finally {
+            NProgress.done(); 
+            setIsListingLoading(false);
         }
     };
 
@@ -120,6 +128,7 @@ const HomePage = () => {
         setIsGeneratingProduct(true);
         setError('');
         try {
+            NProgress.start();
             await addProduct(posts[0].url);
             setActiveTab('listing');
         } catch (err) {
@@ -127,6 +136,7 @@ const HomePage = () => {
             setError('Failed to generate product listing');
         } finally {
             setIsGeneratingProduct(false);
+            NProgress.done(); 
         }
     };
 
@@ -178,79 +188,132 @@ const HomePage = () => {
     }, []);
 
     return (
-        <div className="min-h-screen bg-gray-950 text-gray-100">
-            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                <Card className="mb-8 bg-gray-900 border-gray-800 py-6">
-                    <CardHeader>
-                        <CardTitle className="text-center text-5xl text-gray-100">
-                            Import Social Media Content
-                        </CardTitle>
-                        <CardDescription className="text-center text-gray-400">
-                            <div className="flex justify-center space-x-4 my-2 mt-6">
-                                <Instagram className="h-8 w-8 text-pink-500" />
-                                <Twitter className="h-8 w-8 text-blue-400" />
-                                <Youtube className="h-8 w-8 text-red-500" />
-                            </div>
-                        </CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                        <PlaceholdersAndVanishInput
-                            placeholders={[
-                                'Paste Instagram link...',
-                                'Paste Twitter link...',
-                                'Paste YouTube link...',
-                            ]}
-                            onChange={(e) => setLink(e.target.value)}
-                            onSubmit={handlePaste}
-                        />
-                    </CardContent>
-                </Card>
+      <div className="min-h-screen bg-gray-950 text-gray-100">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <Card className="mb-8 bg-gray-900 border-gray-800 py-6">
+            <CardHeader>
+              <CardTitle className="text-center text-5xl text-gray-100">
+                Import Social Media Content
+              </CardTitle>
+              <CardDescription className="text-center text-gray-400">
+                <div className="flex justify-center space-x-4 my-2 mt-6">
+                  <Instagram className="h-8 w-8 text-pink-500" />
+                  <Twitter className="h-8 w-8 text-blue-400" />
+                  <Youtube className="h-8 w-8 text-red-500" />
+                </div>
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <PlaceholdersAndVanishInput
+                placeholders={[
+                  "Paste Instagram link...",
+                  "Paste Twitter link...",
+                  "Paste YouTube link...",
+                ]}
+                onChange={(e) => setLink(e.target.value)}
+                onSubmit={handlePaste}
+              />
+            </CardContent>
+          </Card>
 
-                {error && (
-                    <Alert
-                        variant="destructive"
-                        className="mb-6 bg-red-900 border-red-800"
-                    >
-                        <AlertDescription>{error}</AlertDescription>
-                    </Alert>
+          {error && (
+            <Alert
+              variant="destructive"
+              className="mb-6 bg-red-900 border-red-800"
+            >
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          )}
+
+          <Tabs
+            defaultValue="post"
+            value={activeTab}
+            onValueChange={setActiveTab}
+            className="space-y-4 border-b-2 border-white"
+          >
+            <TabsList className="grid w-full grid-cols-2">
+              <TabsTrigger value="post" className={`${activeTab === 'post' ? 'bg-gray-800' : ''} py-2`}>
+                Post
+                {isLoading && (
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="ms-2 text-dark-mode"
+                    fill="currentColor"
+                  >
+                    <path
+                      d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,19a8,8,0,1,1,8-8A8,8,0,0,1,12,20Z"
+                      opacity=".25"
+                    />
+                    <path d="M10.14,1.16a11,11,0,0,0-9,8.92A1.59,1.59,0,0,0,2.46,12,1.52,1.52,0,0,0,4.11,10.7a8,8,0,0,1,6.66-6.61A1.42,1.42,0,0,0,12,2.69h0A1.57,1.57,0,0,0,10.14,1.16Z">
+                      <animateTransform
+                        attributeName="transform"
+                        type="rotate"
+                        dur="0.75s"
+                        values="0 12 12;360 12 12"
+                        repeatCount="indefinite"
+                      />
+                    </path>
+                  </svg>
                 )}
+              </TabsTrigger>
+              <TabsTrigger value="listing" className={`${activeTab === 'listing' ? 'bg-gray-800' : ''} py-2`}>
+                Listing
+                {isListingLoading && (
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="ms-2 text-dark-mode"
+                    fill="currentColor"
+                  >
+                    <path
+                      d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,19a8,8,0,1,1,8-8A8,8,0,0,1,12,20Z"
+                      opacity=".25"
+                    />
+                    <path d="M10.14,1.16a11,11,0,0,0-9,8.92A1.59,1.59,0,0,0,2.46,12,1.52,1.52,0,0,0,4.11,10.7a8,8,0,0,1,6.66-6.61A1.42,1.42,0,0,0,12,2.69h0A1.57,1.57,0,0,0,10.14,1.16Z">
+                      <animateTransform
+                        attributeName="transform"
+                        type="rotate"
+                        dur="0.75s"
+                        values="0 12 12;360 12 12"
+                        repeatCount="indefinite"
+                      />
+                    </path>
+                  </svg>
+                )}
+              </TabsTrigger>
+            </TabsList>
 
-                <Tabs
-                    value={activeTab}
-                    onValueChange={setActiveTab}
-                    className="space-y-4 border-b-2 border-white"
+            <TabsContent value="post" className="space-y-4">
+              <ExtractedPostView
+                post={posts?.[0] || null}
+                handleDelete={handleDelete}
+              />
+              {posts?.[0] && (
+                <Button
+                  onClick={handleGenerateProduct}
+                  disabled={isGeneratingProduct}
+                  className="w-full mt-4"
                 >
-                    <TabsList className="grid w-full grid-cols-2">
-                        <TabsTrigger value="post">Post</TabsTrigger>
-                        <TabsTrigger value="listing">
-                            Listing
-                        </TabsTrigger>
-                    </TabsList>
+                  {isGeneratingProduct
+                    ? "Generating..."
+                    : "Generate Product Listing"}
+                </Button>
+              )}
+            </TabsContent>
 
-                    <TabsContent value="post" className="space-y-4">
-                        <ExtractedPostView
-                            post={posts?.[0] || null}
-                            handleDelete={handleDelete}
-                        />
-                        {posts?.[0] && (
-                            <Button
-                                onClick={handleGenerateProduct}
-                                disabled={isGeneratingProduct}
-                                className="w-full mt-4"
-                            >
-                                {isGeneratingProduct
-                                    ? 'Generating...'
-                                    : 'Generate Product Listing'}
-                            </Button>
-                        )}
-                    </TabsContent>
-
-                    {product && <TabsContent value="listing">
-                        <ProductCard product={product} />
-                    </TabsContent>}
-                </Tabs>
-            </div>
+              <TabsContent value="listing">
+            {product && (
+                <ProductCard product={product} />
+            )}
+              </TabsContent>
+          </Tabs>
         </div>
+      </div>
     );
 };
 

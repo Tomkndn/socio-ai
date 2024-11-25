@@ -2,10 +2,10 @@
 import { useState } from 'react';
 import { Dialog, DialogContent, DialogTitle } from '../../ui/dialog';
 import Image from 'next/image';
-import { ExtractedMedia } from '@/types';
+import { ExtractedMedia, MediaLinks } from '@/types';
 
 interface MediaGridProps {
-    media: string[];
+    media: MediaLinks[];
     type: 'image' | 'video';
 }
 
@@ -22,7 +22,7 @@ export const MediaGrid = ({ media, type }: MediaGridProps) => {
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
                 {media.map(
                     (
-                        item: ExtractedMedia | string,
+                        item: MediaLinks,
                         index: number
                     ) => {
                         // console.log(item);
