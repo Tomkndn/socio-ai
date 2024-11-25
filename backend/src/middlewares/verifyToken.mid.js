@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 
 const verifyToken = (req, res, next) => {
     try {
-        console.log(req?.body);
+        // console.log(req?.body);
 
         // console.log(
         //     req?.headers,
@@ -19,9 +19,9 @@ const verifyToken = (req, res, next) => {
 
         const token =
             req?.cookies?.token ||
-            req.headers?.authorization?.split(' ')[1];
+            req.headers?.authorization?.trim().split(' ')[1];
 
-        if (!token) {
+        if (!token || token === 'null' || token?.length?.trim === 0) {
             return res
                 .status(403)
                 .send({ message: 'No token provided!' });
@@ -41,7 +41,7 @@ const verifyToken = (req, res, next) => {
             }
             req.user = decoded;
         });
-        if (!req.user._id) {
+        if (!req.user?._id) {
             return res.status(403).send({ message: 'Invalid Token' });
         }
         next();

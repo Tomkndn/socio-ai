@@ -4,3 +4,4 @@ flask
 python-dotenv
 honcho
 gunicorn
+flask-cors
