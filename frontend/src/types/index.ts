@@ -3,8 +3,8 @@ export interface ExtractedPost {
     owner: string;
     content: string;
     url?: string;
-    images?: string[];
-    videos?: string[];
+    images?:MediaLinks[];
+    videos?: MediaLinks[];
 }
 
 export interface AmazonProductListing {
@@ -25,4 +25,9 @@ export interface AmazonProductListing {
 export interface ExtractedMedia {
     url: string;
     type: 'image' | 'video';
+}
+
+export interface MediaLinks{
+    url: string;
+    publicId: string;
 }

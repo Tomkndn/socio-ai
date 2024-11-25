@@ -33,7 +33,7 @@ export default function AuthPage() {
             router.push('/');
             router.refresh();
         } catch (error) {
-            console.error(error);
+            console.log(error);
         }
     };
 
@@ -43,7 +43,7 @@ export default function AuthPage() {
             router.push('/');
             router.refresh();
         } catch (error) {
-            console.error(error);
+            console.log(error);
         }
     };
 
