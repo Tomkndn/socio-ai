@@ -4,7 +4,7 @@ import shutil
 def download_using_instaloader(url):
     current_directory = os.getcwd()
 
-    relative_path = os.path.join("..", "..", "socio-ai", "media")
+    relative_path = os.path.join("..", "media")
     DOWNLOAD_PATH = os.path.join(current_directory, relative_path)
 
     TEMP_PATH = os.path.join(DOWNLOAD_PATH, f"{url}")
