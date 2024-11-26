@@ -39,7 +39,7 @@ Environment Variables:
 
 Environment Variables:
 - Copy the `.env.example` file and rename it to `.env`.
-- Define `PORT` and `HOST` in the `.env` file.
+- [Optional] Define `PORT` and `HOST` in the `.env` file.
 
 ## Database
 
