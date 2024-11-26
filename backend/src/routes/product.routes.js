@@ -9,7 +9,7 @@ const router = Router();
 router.route('/all')
     .get(productController.getAllProducts);
 
-router.route('/analyze')
+router.route('/analyze/:id')
     .post(verifyToken, getAnalysis, productController.createProduct);
 
 router.route('/:id')

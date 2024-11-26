@@ -6,16 +6,14 @@ import axios from "axios";
 
 const router = Router();
 
+// @ts-ignore
 router.get('/', async (req, res) => {
     const test_flask_url = process.env.FLASK_URL || 'http://localhost:5000';
     try {
-        const test = await axios.get(test_flask_url + '/testing');
-        console.log(
-            test?.data, test?.status
-        )
+        await axios.get(test_flask_url + '/testing');
         return res.send('API is Running.');
     } catch (error) {
-        console.log(test_flask_url);
+        // console.log(test_flask_url);
         console.error('Error in /:', error.message);
         return res.status(500).send('Internal Server Error');
     }

@@ -15,7 +15,7 @@ ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
 
 WORKDIR /express
 
-COPY package*.json ./
+COPY package.json ./
 RUN npm install
 
 COPY . .

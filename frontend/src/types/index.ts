@@ -3,7 +3,7 @@ export interface ExtractedPost {
     owner: string;
     content: string;
     url?: string;
-    images?:MediaLinks[];
+    images?: MediaLinks[];
     videos?: MediaLinks[];
 }
 
@@ -18,8 +18,8 @@ export interface AmazonProductListing {
     stock: number | 0;
     category?: string[];
     status?: 'draft' | 'listed';
-    images?: string[];
-    videos?: string[];
+    images?: MediaLinks[];
+    videos?: MediaLinks[];
 }
 
 export interface ExtractedMedia {

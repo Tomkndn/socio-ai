@@ -9,15 +9,16 @@ import { DetailView } from './PostDetailView';
 export function ExtractedPostView({
     post,
     handleDelete,
-}: // posts
-// setAllPosts,
+    // posts
+    // setAllPosts,
+}:
 {
     post: ExtractedPost | null;
+    handleDelete: (id: string) => void;
     // posts: ExtractedPost[] | null;
     // setAllPosts: React.Dispatch<
     //     React.SetStateAction<ExtractedPost[] | null>
     // >;
-    handleDelete: (id: string) => void;
 }) {
     const [selectedPost, setSelectedPost] =
         useState<ExtractedPost | null>(null);

@@ -22,13 +22,13 @@ export const DetailView = ({ post, onClose }: DetailViewProps) => {
                         <div className="w-1/2 h-full bg-black">
                             {post.videos?.length ?? 0 ? (
                                 <video
-                                    src={typeof post.videos?.[0] === 'string' ? post.videos[0] : ''}
+                                    src={post.videos?.[0]?.url || ''}
                                     controls
                                     className="w-full h-full object-contain"
                                 />
                             ) : (
                                 <img
-                                    src={typeof post.images?.[0] === 'string' ? post.images[0] : ''}
+                                    src={post.images?.[0]?.url || ''}
                                     alt={post.content.slice(0, 10) + '....png'}
                                     className="w-full h-full object-contain"
                                 />
@@ -66,13 +66,13 @@ export const DetailView = ({ post, onClose }: DetailViewProps) => {
                     <div className="aspect-video w-full">
                         {post.videos?.length ?? 0 ? (
                             <video
-                                src={typeof post.videos?.[0] === 'string' ? post.videos[0] : ''}
+                                src={post.videos?.[0]?.url || ''}
                                 controls
                                 className="w-full h-full object-contain"
                             />
                         ) : (
                             <img
-                                src={typeof post.images?.[0] === 'string' ? post.images[0] : ''}
+                                src={post.images?.[0]?.url || ''}
                                 alt=""
                                 className="w-full h-full object-contain"
                             />

@@ -44,8 +44,6 @@ export const createProduct = async (req, res) => {
         });
     }
 
-
-
     Keywords = Keywords?.toString() || '';
     Category = Category?.toString() || '';
 

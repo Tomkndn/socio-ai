@@ -16,6 +16,8 @@ export const PostCard = ({
     handlePostDelete: (id: string) => void;
 }) => {
     const [isFlipped, setIsFlipped] = useState(false);
+    console.log(post);
+
 
     useEffect(() => {
         if (post?.images?.length == 0 && post.videos?.length == 0) {

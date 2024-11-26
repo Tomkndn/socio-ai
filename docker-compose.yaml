@@ -10,8 +10,8 @@ services:
     env_file:
       - ./frontend/.env
     volumes:
-      - ./frontend:/client
-      - /app/node_modules
+      # - ./frontend:/client
+      - /client/node_modules
     depends_on:
       - backend
       - flask
@@ -28,7 +28,7 @@ services:
       - FLASK_URL=http://flask:5000
     volumes:
       - ./backend:/express
-      - /node_modules
+      - /express/node_modules
       - ./media:/media
       - ./final:/final
     depends_on:

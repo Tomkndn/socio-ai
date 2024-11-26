@@ -1,26 +1,26 @@
-import path from 'path';
-import { getInsta, getTweet } from "../utils/socialMedia.util.js";
-import Post from '../models/post.model.js';
-import { generateWithGemini } from '../services/gemini.service.js'
 import fs from 'fs';
+import path from 'path';
+import Post from '../models/post.model.js';
+import { getInsta, getTweet } from "../utils/socialMedia.util.js";
+import { generateWithGemini } from '../services/gemini.service.js'
 
 export const getPost = async (req, res, next) => {
     const urlString = req.body.url;
+    const url = new URL(
+        urlString.includes('?')
+            ? urlString.substring(0, urlString.indexOf('?'))
+            : urlString
+    );
+
+    const shortCode = path.basename(url.toString());
+    const assetCwd = path.resolve(
+        process.cwd(),
+        `../media/${shortCode}`
+    );
+
+    let data;
 
     try {
-        const url = new URL(
-            urlString.includes('?')
-                ? urlString.substring(0, urlString.indexOf('?'))
-                : urlString
-        );
-
-        const shortCode = path.basename(url.toString());
-        const assetCwd = path.join(
-            process.cwd(),
-            `../media/${shortCode}`
-        );
-
-        let data;
         if (url.hostname.includes('instagram.com')) {
             data = await getInsta(url.href, assetCwd);
         } else if (url.hostname.includes('x.com') || url.hostname.includes('twitter.com')) {
@@ -45,33 +45,23 @@ export const getPost = async (req, res, next) => {
             source: 'error',
             message: 'Invalid URL provided.',
         });
+    } finally {
+        if (fs.existsSync(assetCwd)) {
+            fs.rmdirSync(assetCwd, { recursive: true });
+        }
     }
 };
 
 export const getAnalysis = async (req, res, next) => {
     try {
-        const { url, id } = req.query;
-        if(!url && !id) {
-            return res.status(400).json({
-                success: false,
-                message: "No Url's provided."
-            })
-        }
-        // console.log(url, id);
-
-        const getPost = await Post.findOne({ $or: [
-            {url: url},
-            {_id: id}
-        ]});
+        const getPost = await Post.findById(req.params.id);
 
         if(!getPost) {
             return res.status(404).json({
                 success: false,
-                message: "No Posts Found."
+                message: "No Posts Found. Please try again."
             });
         }
-        // console.log(getPost);
-
 
         const response = await generateWithGemini([
             ...getPost.images,
@@ -85,8 +75,7 @@ export const getAnalysis = async (req, res, next) => {
             })
         }
 
-        // TODO:- Save The response.json Product.
-        req.body = {...response, url, id};
+        req.body = {...response, url: getPost.url};
         next();
     } catch (error) {
         console.error(error.message || error);
@@ -94,5 +83,16 @@ export const getAnalysis = async (req, res, next) => {
             success: false,
             message: "Internal Server Error"
         });
+    } finally {
+        // console.log('getAnalysis finally:', req.params);
+        const assetCwd = path.resolve(
+            process.cwd(),
+            `./../final/final.txt`
+        );
+        console.log('final.txt deletion log --> assetCwd:', assetCwd);
+
+        if (fs.existsSync(assetCwd)) {
+            fs.rmSync(assetCwd);
+        }
     }
 }

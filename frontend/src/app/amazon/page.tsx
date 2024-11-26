@@ -25,7 +25,12 @@ const sampleProducts: AmazonProductListing[] = [
         title: 'Wireless Earbuds Pro',
         price: '$129',
         currency: 'USD',
-        images: ['/api/placeholder/400/400'],
+        images: [
+            {
+                url: '/api/placeholder/400/400',
+                publicId: '010',
+            },
+        ],
         status: 'listed',
         stock: 11,
         category: ['Electronics'],
@@ -36,7 +41,12 @@ const sampleProducts: AmazonProductListing[] = [
         title: 'Smart Watch Series X',
         price: '200',
         currency: '$USD',
-        images: ['/api/placeholder/400/400'],
+        images: [
+            {
+                url: '/api/placeholder/400/400',
+                publicId: '010',
+            },
+        ],
         status: 'draft',
         stock: 7,
         category: ['Wearables'],
@@ -47,7 +57,12 @@ const sampleProducts: AmazonProductListing[] = [
         title: 'Premium Headphones',
         price: '$300',
         currency: 'USD',
-        images: ['/api/placeholder/400/400'],
+        images: [
+            {
+                url: '/api/placeholder/400/400',
+                publicId: '010',
+            },
+        ],
         status: 'listed',
         stock: 70,
         category: ['Audio'],

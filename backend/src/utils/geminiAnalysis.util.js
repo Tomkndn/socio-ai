@@ -23,9 +23,9 @@ export async function geminiAnalysis(pathOfListing, content) {
         }
     );
 
-    console.log(
-        `Uploaded file ${uploadResponse.file.displayName} as: ${uploadResponse.file.uri}`
-    );
+    // console.log(
+    //     `Uploaded file ${uploadResponse.file.displayName} as: ${uploadResponse.file.uri}`
+    // );
 
     const params = {
         temperature: 0.88,
@@ -63,22 +63,22 @@ export async function geminiAnalysis(pathOfListing, content) {
     const finalJson = await convertListingToJSON(data);
 
     if (Array.isArray(finalJson)) {
-        console.log('Final Json:', finalJson[0]);
+        console.log('Final Json:', finalJson[finalJson.length - 1]);
         return finalJson[0];
     }
 
     return finalJson;
 }
 
-function saveResponseToFile(filePath, data) {
-    fs.writeFile(filePath, data, (err) => {
-        if (err) {
-            console.error('Error saving the file:', err);
-        } else {
-            console.log(`File saved successfully as ${filePath}!`);
-        }
-    });
-}
+// function saveResponseToFile(filePath, data) {
+//     fs.writeFile(filePath, data, (err) => {
+//         if (err) {
+//             console.error('Error saving the file:', err);
+//         } else {
+//             console.log(`File saved successfully as ${filePath}!`);
+//         }
+//     });
+// }
 
 async function convertListingToJSON(listingText) {
     const lines = listingText.split('\n');

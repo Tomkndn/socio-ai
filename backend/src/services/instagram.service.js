@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const fetchInstagramDataWithMedia = async (url) => {
-    console.log("Fetching Instagram data with media.");
+    // console.log("Fetching Instagram data with media.");
     const flask_url = (process.env.FLASK_URL || 'http://localhost:5000') + '/api/url'
     const download = await axios.post(flask_url, { url }, {
         headers: {

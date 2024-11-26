@@ -46,7 +46,7 @@ const ProductCard = ({
                         <div className="space-y-4">
                             <div className="aspect-square relative overflow-hidden rounded-lg">
                                 <img
-                                    src={product.images[0]}
+                                    src={product.images[0].url}
                                     alt={product.title}
                                     className="object-cover w-full h-full"
                                 />
@@ -61,7 +61,7 @@ const ProductCard = ({
                                                 className="aspect-square relative overflow-hidden rounded-lg"
                                             >
                                                 <img
-                                                    src={img}
+                                                    src={img.url}
                                                     alt={`${
                                                         product.title
                                                     } - ${idx + 2}`}
@@ -150,7 +150,7 @@ const ProductCard = ({
                                     className="aspect-video relative overflow-hidden rounded-lg"
                                 >
                                     <video
-                                        src={video}
+                                        src={video.url}
                                         controls
                                         className="w-full h-full object-cover"
                                     />

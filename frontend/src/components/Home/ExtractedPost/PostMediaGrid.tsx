@@ -41,21 +41,13 @@ export const MediaGrid = ({ media, type }: MediaGridProps) => {
                             >
                                 {type === 'video' ? (
                                     <video
-                                        src={
-                                            typeof item === 'string'
-                                                ? item
-                                                : item.url
-                                        }
+                                        src={item.url}
                                         controls
                                         className="w-full h-full object-cover"
                                     />
                                 ) : (
                                     <Image
-                                        src={
-                                            typeof item === 'string'
-                                                ? item
-                                                : item.url
-                                        }
+                                        src={item.url}
                                         alt="Post Image"
                                         width={100}
                                         height={100}

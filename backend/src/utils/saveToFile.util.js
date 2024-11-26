@@ -19,9 +19,9 @@ export async function categorizeFiles(folderPath) {
             videos: [],
         };
 
-        console.log("inside before" + folderPath);
+        // console.log("inside before" + folderPath);
         const items = fs.readdirSync(path.resolve(folderPath));
-        console.log("after" + items);
+        // console.log("after" + items);
         items.forEach((item) => {
             const itemPath = path.join(folderPath, item);
             const stat = fs.statSync(itemPath);

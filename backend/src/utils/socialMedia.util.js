@@ -73,7 +73,7 @@ export const getTweet = async (url, assetCwd) => {
 
 export const getInsta = async (url, assetCwd) => {
     try {
-        console.log("assetCwd", assetCwd);
+        // console.log("assetCwd", assetCwd);
 
         let data = await fetchInstagramDataWithMedia(url);
         // console.log('Data:', data);

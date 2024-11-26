@@ -94,7 +94,7 @@ async function processMediaPaths(
         JSON.stringify(processed, null, 2)
     );
 
-    console.log('All media processing tasks completed.');
+    // console.log('All media processing tasks completed.');
 }
 
 async function processVideo(
@@ -125,7 +125,7 @@ async function appendFilesToFile(directoryPath, outputFilePath) {
         const files = await fs.readdir(directoryPath);
 
         if (files.length === 0) {
-            console.log('No files found in the directory.');
+            // console.log('No files found in the directory.');
             return;
         }
 
@@ -140,7 +140,7 @@ async function appendFilesToFile(directoryPath, outputFilePath) {
                     'utf8'
                 );
 
-                console.log(`Appended content from: ${file}`);
+                // console.log(`Appended content from: ${file}`);
             } catch (error) {
                 console.error(
                     `Error processing file: ${filePath}`,
@@ -149,7 +149,7 @@ async function appendFilesToFile(directoryPath, outputFilePath) {
             }
         }
 
-        console.log(`All content appended to: ${outputFilePath}`);
+        // console.log(`All content appended to: ${outputFilePath}`);
     } catch (error) {
         console.error(
             'Error reading directory or writing to file:',

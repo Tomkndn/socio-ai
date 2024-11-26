@@ -10,7 +10,7 @@ export async function generateWithVideo(url, model, fileManager) {
         fs.existsSync(`${temp.slice(0, temp.lastIndexOf('.'))}.txt`)
     ) {
         // saveToFile(`${temp}.txt`, 'Video');
-        console.log('File already exists');
+        // console.log('File already exists');
         return;
     }
 

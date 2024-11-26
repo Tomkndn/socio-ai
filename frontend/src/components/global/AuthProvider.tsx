@@ -39,7 +39,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const login = async (email: string, password: string) => {
         try {
             const response = await axios.post(
-                `${process.env.NEXT_PUBLIC_API_URL}/users/login`,
+                `${process.env.NEXT_PUBLIC_API_URL}/api/users/login`,
                 {
                     email,
                     password,
@@ -66,7 +66,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     ) => {
         try {
             const response = await axios.post(
-                `${process.env.NEXT_PUBLIC_API_URL}/users/register`,
+                `${process.env.NEXT_PUBLIC_API_URL}/api/users/register`,
                 {
                     username,
                     email,
@@ -90,7 +90,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const guestLogin = async () => {
         try {
             const response = await axios.post(
-                `${process.env.NEXT_PUBLIC_API_URL}/users/guest`,
+                `${process.env.NEXT_PUBLIC_API_URL}/api/users/guest`,
                 {},
                 {
                     headers: {
@@ -116,7 +116,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         try {
             setUser(null);
             setError(null);
-            const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users/logout`, {
+            const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/users/logout`, {
                 withCredentials: true,
             });
 

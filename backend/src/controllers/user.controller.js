@@ -36,11 +36,14 @@ export const registerUser = async (req, res) => {
             password
         });
         const newUser = await user.save();
-        return res.status(201).json({
-            success: true,
-            message: "User created successfully",
+        req.status = 201;
+        req.user = newUser;
+        req.json = {
+            message: 'Guest user created successfully',
             data: newUser,
-        })
+        };
+
+        return generateTokenCont(req, res);
     } catch (error) {
         return res.status(400).json({ message: error.message });
     }
@@ -48,16 +51,21 @@ export const registerUser = async (req, res) => {
 
 export const guestUser = async (req, res) => {
     try {
+        let random = '0000';
+        while (await User.findOne({ username: 'guest ' + random })) {
+            random = Math.floor(Math.random() * 10000).toString();
+        }
         const user = new User({
-            username: 'guest',
-            email: 'guest000@guest.com',
-            password: 'guest000'
+            username: `guest${random}`, // example: guest 1234
+            email: `guest${random}@guest.com`,
+            password: `guest${random}`
         });
         const newUser = await user.save();
         req.status = 201;
         req.user = newUser;
         req.json = {
             message: 'Guest user created successfully',
+            data: newUser
         }
 
         return generateTokenCont(req, res);
