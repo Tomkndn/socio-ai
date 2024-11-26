@@ -1,33 +1,56 @@
-DOCKER:-
-    - Install Docker and Docker Compose
-    - Run the following command to build the images and run the containers
-        - `docker-compose up --build`
-    - FRONTEND:- http://localhost:3000
-    - BACKEND:- http://localhost:4000
-    - FLASK:- http://localhost:5000
-    - Run the following command to stop the containers
-        - `docker-compose down`
+## Docker
 
-FRONTEND:-
-    Environment Variables:-
-        - Copy the .env.example file and Rename it as .env
-        - Handle the Backend API URL named as
-            - NEXT_PUBLIC_API_URL = http://localhost:4000
+- Install Docker and Docker Compose.
+- Build the images and run the containers with:
+    ```sh
+    docker-compose up --build
+    ```
+- Compatibility tested with:
+    - Mozilla Firefox Version 89.0.2 (64-bit)
+    - Docker Desktop Version 3.5.2 (66501)
+    - Docker Compose Version 1.29.2 (5becea4c)
+- The app will be running on the following ports:
+    - Frontend: [http://localhost:3000](http://localhost:3000)
+    - Backend: [http://localhost:4000](http://localhost:4000)
+    - Flask: [http://localhost:5000](http://localhost:5000)
+- Stop the containers with:
+    ```sh
+    docker-compose down
+    ```
 
-BACKEND:-
-    Environment Variables:-
-        - Copy the .env.example file and Rename it as .env
-        - Go to https://www.mongodb.com/
-            - Create a new cluster and get the connection string
-            - Add the connection string in the .env file
-        - Go to https://ai.google.dev/gemini-api/docs/api-key
-            - Create a new project and get the api key
-            - Add the api key in the .env file
-        - Go to https://cloudinary.com/
-            - Create a new account and get the cloud name, api key and api secret
-            - Add the cloud name, api key and api secret in the .env file
+## Frontend
 
-FLASK:-
-    Environment Varibles:-
-        - Copy the .env.example file and Rename it as .env
-        - Define PORT and HOST in the .env file
+Environment Variables:
+- Copy the `.env.example` file and rename it to `.env`.
+- Set the Backend API URL:
+    ```env
+    NEXT_PUBLIC_API_URL=http://localhost:4000
+    ```
+
+## Backend
+
+Environment Variables:
+- Copy the `.env.example` file and rename it to `.env`.
+- [Create a new MongoDB cluster](https://www.mongodb.com/) and add the connection string to the `.env` file.
+- [Create a new Google project](https://ai.google.dev/gemini-api/docs/api-key) and add the API key to the `.env` file.
+- [Create a new Cloudinary account](https://cloudinary.com/) and add the cloud name, API key, and API secret to the `.env` file.
+
+## Flask
+
+Environment Variables:
+- Copy the `.env.example` file and rename it to `.env`.
+- Define `PORT` and `HOST` in the `.env` file.
+
+## Database
+
+- The database is hosted on MongoDB Atlas.
+    - Built with Mongoose Version 8.8.2.
+    - Tested with MongoDB Compass.
+- The database has 3 collections:
+    - `users`
+    - `posts`
+    - `products`
+
+## Open Source License
+
+- This project is licensed under the MIT License. See the `LICENSE.md` file for details.
