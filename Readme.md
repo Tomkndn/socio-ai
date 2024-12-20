@@ -1,56 +1,71 @@
-## Docker
+# Socio-AI
 
-- Install Docker and Docker Compose.
-- Build the images and run the containers with:
-    ```sh
+Socio-AI is an AI-powered platform designed for [brief project description]. This repository includes the frontend and backend implementation along with Docker configurations for seamless deployment.
+
+## Prerequisites
+
+### Frontend
+    - Node.js (v14.17.0) (includes npm)
+    - compatible browser (Google Chrome, Mozilla Firefox)
+
+### Backend
+    - Docker
+    - Install Docker and Docker Compose
+
+## Environment Variables
+- [.env.sample]() file is provided in the each directory[Frontend, Backend, Downloader].
+- [MongoDB](https://www.mongodb.com/) Atlas connection string.
+- [Gemini API Key](https://ai.google.dev/gemini-api/docs/api-key) Gemini API Key.
+- [Cloudinary Setup](https://cloudinary.com) Cloudinary API Key, API Secret, and Cloud Name.
+
+## Steps to Run
+
+### Clone the Repository
+
+```bash
+    git clone https://github.com/Dumb-Crews/socio-ai.git
+    cd socio-ai
+```
+
+### Frontend Setup (Root Directory)
+
+```bash
+    cd frontend
+    npm install
+    npm run dev
+```
+
+### Backend Setup (Root Directory)
+
+```bash
+    cd backend
+    npm install
+    npm run dev
+
+```bash
     docker-compose up --build
-    ```
-- Compatibility tested with:
-    - [Open Source](https://github.com/mozilla/) Mozilla Firefox Version 89.0.2 (64-bit)
-    - [Historically, Open Source](https://github.com/docker) Docker Desktop Version 3.5.2 (66501)
-    - [Open Source](https://github.com/docker) Docker Compose Version 1.29.2 (5becea4c)
-- The app will be running on the following ports:
-    - Frontend: [http://localhost:3000](http://localhost:3000)
-    - Backend: [http://localhost:4000](http://localhost:4000)
-    - Flask: [http://localhost:5000](http://localhost:5000)
-- Stop the containers with:
-    ```sh
-    docker-compose down
-    ```
+```
 
-## Frontend
+## Ports [Development: Localhost]
 
-Environment Variables:
-- Copy the `.env.example` file and rename it to `.env`.
-- Set the Backend API URL:
-    ```env
-    NEXT_PUBLIC_API_URL=http://localhost:4000
-    ```
+- Frontend: 3000
+- Backend: 4000 & 5000
+    - 4000: API [Main Service]
+    - 5000: Flask API [Post Downloader]
 
-## Backend
+## Compatibility
 
-Environment Variables:
-- Copy the `.env.example` file and rename it to `.env`.
-- [FREE] [Create a new MongoDB cluster](https://www.mongodb.com/) and add the connection string to the `.env` file.
-- [FREE] [Create a new Google project](https://ai.google.dev/gemini-api/docs/api-key) and add the API key to the `.env` file.
-- [FREE] [Create a new Cloudinary account](https://cloudinary.com/) and add the cloud name, API key, and API secret to the `.env` file.
+Tested With:
+    - Mozilla Firefox Version 89.0.2 (64-bit)
+    - Node.js (v14.17.0)
+    - Docker Desktop Version 3.5.2 (66501)
 
-## Flask
+## Contributors
 
-Environment Variables:
-- Copy the `.env.example` file and rename it to `.env`.
-- [Optional] Define `PORT` and `HOST` in the `.env` file.
+- [Lovish Bansal](https://www.linkedin.com/in/lovish2584-profile)
+- [Tushar Singla](https://www.linkedin.com/in/tushar-singla19)
+- [Kundan Tamsoy](https://www.linkedin.com/in/kundan-tamsoy-646023230)
 
-## Database
+## License
 
-- The database is hosted on MongoDB Atlas.
-    - [NPM] Built with Mongoose Version 8.8.2.
-    - [FREE] Tested with MongoDB Compass.
-- The database has 3 collections:
-    - `users`
-    - `posts`
-    - `products`
-
-## Open Source License
-- [LICENSE](LICENSE.md)
-- This project is licensed under the MIT License. See the `LICENSE.md` file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

@@ -14,7 +14,7 @@ export const getTweet = async (url, assetCwd) => {
         const data = await fetchTweetDataWithMedia(url);
         if (!data) return null;
 
-        console.log('Data:', data);
+        // console.log('Data:', data);
 
         data.images = data.images?.length ? await Promise.all(
             data.images.map(async (image) => {

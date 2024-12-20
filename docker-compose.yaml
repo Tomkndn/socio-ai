@@ -1,57 +1,42 @@
 version: '3.8'
 
 services:
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    ports:
-      - "3000:3000"
-    env_file:
-      - ./frontend/.env
-    volumes:
-      # - ./frontend:/client
-      - /client/node_modules
-    depends_on:
-      - backend
-      - flask
+    backend:
+        build:
+            context: ./backend
+            dockerfile: Dockerfile
+        ports:
+            - '4000:4000'
+        env_file:
+            - ./backend/.env
+        environment:
+            - FLASK_URL=http://flask:5000
+        volumes:
+            - ./backend:/express
+            - /express/node_modules
+            - ./media:/media
+            - ./final:/final
+        depends_on:
+            - flask
+        healthcheck:
+            test: ['CMD', 'curl', '-f', 'http://localhost:4000/api']
+            interval: 10s
+            timeout: 10s
+            retries: 3
+            start_period: 10s
 
-  backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    ports:
-      - "4000:4000"
-    env_file:
-      - ./backend/.env
-    environment:
-      - FLASK_URL=http://flask:5000
-    volumes:
-      - ./backend:/express
-      - /express/node_modules
-      - ./media:/media
-      - ./final:/final
-    depends_on:
-      - flask
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:4000/api"]
-      interval: 10s
-      timeout: 10s
-      retries: 3
-      start_period: 10s
-
-  flask:
-    build:
-      context: ./downloader
-      dockerfile: Dockerfile
-    ports:
-      - "5000:5000"
-    volumes:
-      - ./downloader:/flask
-      - ./media:/media
+    flask:
+        build:
+            context: ./downloader
+            dockerfile: Dockerfile
+        ports:
+            - '5000:5000'
+        volumes:
+            - ./downloader:/flask
+            - ./media:/media
 
 volumes:
-  media:
-    driver: local
-  final:
-    driver: local
+    media:
+        driver: local
+    final:
+        driver: local

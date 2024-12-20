@@ -184,8 +184,8 @@ export const generateTokenCont = async (req, res) => {
         return res
             .cookie('token', token, {
                 httpOnly: true,
-                sameSite: 'None', // csrf
-                secure: true,
+                sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // csrf
+                secure: process.env.NODE_ENV === 'production' ? true : false, // csrf
             })
             .status(req.status || 201)
             .json(

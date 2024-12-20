@@ -5,25 +5,37 @@ import { getInsta, getTweet } from "../utils/socialMedia.util.js";
 import { generateWithGemini } from '../services/gemini.service.js'
 
 export const getPost = async (req, res, next) => {
-    const urlString = req.body.url;
-    const url = new URL(
-        urlString.includes('?')
-            ? urlString.substring(0, urlString.indexOf('?'))
-            : urlString
-    );
+        const urlString = req.body.url;
+        if (
+            urlString.includes(' ') ||
+            !urlString.includes('.com')
+        ) {
+            return res.status(400).json({
+                source: 'error',
+                message: 'The URL contains invalid characters.',
+            });
+        }
+        const url = new URL(
+            urlString.includes('?')
+                ? urlString.substring(0, urlString.indexOf('?'))
+                : urlString
+        );
 
-    const shortCode = path.basename(url.toString());
-    const assetCwd = path.resolve(
-        process.cwd(),
-        `../media/${shortCode}`
-    );
+        const shortCode = path.basename(url.toString());
+        const assetCwd = path.resolve(
+            process.cwd(),
+            `../media/${shortCode}`
+        );
 
-    let data;
+        let data;
 
     try {
         if (url.hostname.includes('instagram.com')) {
             data = await getInsta(url.href, assetCwd);
-        } else if (url.hostname.includes('x.com') || url.hostname.includes('twitter.com')) {
+        } else if (
+            url.hostname.includes('x.com') ||
+            url.hostname.includes('twitter.com')
+        ) {
             data = await getTweet(url.href, assetCwd);
         } else {
             return res.status(400).json({
@@ -37,7 +49,7 @@ export const getPost = async (req, res, next) => {
                 message: 'No data found.',
             });
         }
-        req.body = {...data, url: urlString};
+        req.body = { ...data, url: urlString };
         next();
     } catch (error) {
         console.error('Error in getPost:', error.message);

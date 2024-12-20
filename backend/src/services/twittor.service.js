@@ -1,13 +1,16 @@
 import puppeteer from 'puppeteer';
 
 const fetchTweetDataWithMedia = async (url) => {
+    if (!url) {
+        console.error('No URL provided');
+        return;
+    }
+
     const browser = await puppeteer.launch({
         headless: true,
         args: ['--no-sandbox', '--disable-setuid-sandbox'],
         timeout: 60000,
     });
-
-    url = url.href;
 
     const page = await browser.newPage();
 

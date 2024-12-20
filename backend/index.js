@@ -16,7 +16,6 @@ app.use(cors({
     credentials: true,
 }));
 
-
 app.use('/api', routes);
 
 connect().then(() => {

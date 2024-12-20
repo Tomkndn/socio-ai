@@ -74,12 +74,12 @@ const HomePage = () => {
 
             setAllPosts([typeof response.data == 'object' ? response.data : response.data.data]);
 
-            // Automatically call addProduct in the background
             if (response.data.url) {
                 addProduct(response.data._id);
             }
         } catch (err) {
             console.error(err);
+            setIsListingLoading(false);
             setError('Failed to load content. Please try again.');
         } finally {
             setIsLoading(false);
@@ -102,9 +102,9 @@ const HomePage = () => {
                 redirect('/auth');
             } else if (response.status === 403) {
                 redirect('/auth');
-            } else {
-                console.log(response);
-            }
+            } //  else {
+                // console.log(response);
+            // }
         } catch (err) {
             console.error(err);
         } finally {
@@ -134,7 +134,7 @@ const HomePage = () => {
     };
 
     const handleDelete = (id: string) => {
-        console.log('Deleting Post:', id);
+        // console.log('Deleting Post:', id);
         setAllPosts((prev: ExtractedPost[] | null) => {
             if (!prev) return null;
             return prev.filter((post) => post._id !== id);
@@ -300,7 +300,7 @@ const HomePage = () => {
                             post={posts?.[0] || null}
                             handleDelete={handleDelete}
                         />
-                        {posts?.[0] && (
+                        {/* {posts?.[0] && (
                             <Button
                                 onClick={handleGenerateProduct}
                                 disabled={isGeneratingProduct}
@@ -310,7 +310,7 @@ const HomePage = () => {
                                     ? 'Generating...'
                                     : 'Generate Product Listing'}
                             </Button>
-                        )}
+                        )} */}
                     </TabsContent>
 
                     <TabsContent value="listing">
