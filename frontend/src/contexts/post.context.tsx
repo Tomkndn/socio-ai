@@ -1,4 +1,3 @@
-// contexts/PostsContext.tsx
 import React, {
     createContext,
     useContext,
@@ -70,7 +69,7 @@ const postsReducer = (
     }
 };
 
-const PostsContext = createContext<{
+export const PostsContext = createContext<{
     state: PostsState;
     dispatch: React.Dispatch<PostsAction>;
 } | null>(null);
@@ -87,14 +86,4 @@ export const PostsProvider = ({
             {children}
         </PostsContext.Provider>
     );
-};
-
-export const usePosts = () => {
-    const context = useContext(PostsContext);
-    if (!context) {
-        throw new Error(
-            'usePosts must be used within a PostsProvider'
-        );
-    }
-    return context;
 };
