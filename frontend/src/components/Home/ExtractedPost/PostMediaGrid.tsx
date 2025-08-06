@@ -27,34 +27,32 @@ export const MediaGrid = ({ media, type }: MediaGridProps) => {
                     ) => {
                         // console.log(item);
                         return (
-                            <div
-                                key={index}
-                                className="aspect-square rounded-lg overflow-hidden cursor-pointer hover:opacity-80 transition-opacity"
-                                onClick={() => {
-                                    setSelectedMedia(
-                                        typeof item === 'string'
-                                            ? item
-                                            : item.url
-                                    );
-                                    setSelectedMediaType(type);
-                                }}
-                            >
-                                {type === 'video' ? (
-                                    <video
-                                        src={item.url}
-                                        controls
-                                        className="w-full h-full object-cover"
-                                    />
-                                ) : (
-                                    <Image
-                                        src={item.url}
-                                        alt="Post Image"
-                                        width={100}
-                                        height={100}
-                                        className="w-full h-full object-cover"
-                                    />
-                                )}
-                            </div>
+                          <div
+                            key={index}
+                            className="aspect-square rounded-lg overflow-hidden cursor-pointer hover:opacity-80 transition-opacity"
+                            onClick={() => {
+                              setSelectedMedia(
+                                typeof item === "string" ? item : item.url
+                              );
+                              setSelectedMediaType(type);
+                            }}
+                          >
+                            {type === "video" ? (
+                              <video
+                                src={item.url}
+                                controls
+                                className="w-full h-full object-cover"
+                              />
+                            ) : (
+                              <img
+                                src={item.url}
+                                alt="Post Image"
+                                width={100}
+                                height={100}
+                                className="w-full h-full object-cover"
+                              />
+                            )}
+                          </div>
                         );
                     }
                 )}

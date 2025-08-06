@@ -29,15 +29,15 @@ import ProductCard from '@/components/Home/GenerateProduct/ProductCard';
 import NProgress from 'nprogress';
 
 const samplePost: ExtractedPost = {
-    _id: '1',
-    content: 'Sample Post 1',
-    owner: 'sample_user',
-    url: 'https://www.instagram.com/p/111111111/',
-    images: [
-        { url: 'https://via.placeholder.com/300', publicId: '1' },
-        { url: 'https://via.placeholder.com/300', publicId: '1' },
-        { url: 'https://via.placeholder.com/300', publicId: '1' },
-    ],
+  _id: "1",
+  content: "Sample Post 1",
+  owner: "sample_user",
+  url: "https://placehold.co/300x300.png?text=Image+12",
+  images: [
+    { url: "https://placehold.co/300x300?text=Image+1", publicId: "1" },
+    { url: "https://placehold.co/300x300?text=Image+2", publicId: "2" },
+    { url: "https://placehold.co/300x300?text=Image+3", publicId: "3" },
+  ],
 };
 
 const HomePage = () => {
@@ -78,7 +78,7 @@ const HomePage = () => {
                 addProduct(response.data._id);
             }
         } catch (err) {
-            console.error(err);
+            console.log(err);
             setIsListingLoading(false);
             setError('Failed to load content. Please try again.');
         } finally {

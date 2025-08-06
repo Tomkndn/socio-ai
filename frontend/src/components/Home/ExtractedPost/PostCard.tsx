@@ -49,7 +49,7 @@ export const PostCard = ({
             <div className="md:w-1/3">
                 {post?.images?.[0] ? (
                     <div className="">
-                        <Image
+                        <img
                             src={post.images[0].url}
                             alt={post.content}
                             width={100}

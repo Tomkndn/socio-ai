@@ -52,14 +52,14 @@ const Navbar = () => {
                     </div>
 
                     <div className="flex items-center space-x-4">
-                        <Button
+                        {/* <Button
                             variant="ghost"
                             size="icon"
                             className="text-gray-400 hover:text-white relative"
                         >
                             <Bell className="h-5 w-5" />
                             <span className="absolute top-0 right-0 h-2 w-2 bg-blue-500 rounded-full"></span>
-                        </Button>
+                        </Button> */}
 
                         {user ? (
                             <DropdownMenu>
